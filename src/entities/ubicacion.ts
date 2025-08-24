@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeor
 
 @Entity('Ubicaciones')
 export class Ubicacion {
-  @PrimaryGeneratedColumn({ name: 'id_ubicacion' })
+  @PrimaryGeneratedColumn({ name: 'id_' })
   idUbicacion: number;
 
   @Column({ name: 'ciudad', type: 'varchar', length: 100 })
