@@ -12,12 +12,13 @@ export const login = async (correo: string, contrasena: string): Promise<Usuario
 
         console.log("Correo recibido:", correo);
 
-        const usuario = await repository.findOne({
-            where: {
-                correo: correo.trim().toLowerCase(),
-                estado: true
-            }
-        });
+       const usuario = await repository.findOne({
+    where: {
+        correo: correo.trim().toLowerCase(),
+        estadoAuditoria: true  
+    }
+});
+
 
         if (!usuario) {
             console.log("No se encontró un usuario activo con ese correo.");

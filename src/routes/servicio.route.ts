@@ -1,16 +1,14 @@
 import { Router } from "express";
-import * as controller from "../controllers/servicio.controller";
-import { verificarJWT } from "../middlewares/auth.middleware";
+import * as servicioController from "../controllers/servicio.controller";
 
 const router = Router();
-router.use(verificarJWT);
 
-router.post("/",  controller.crear);
-
-router.get("/", controller.listar);
-router.get("/:id", controller.obtenerPorId);
-router.put("/:id", controller.actualizar);
-router.post("/:id/activar", controller.activar);
-router.delete("/:id", controller.desactivar);
+router.post("/", servicioController.insertarServicio);
+router.get("/", servicioController.listarServicios);
+router.get("/activos", servicioController.listarServiciosActivos);
+router.get("/:id", servicioController.obtenerServicioPorId);
+router.put("/:id", servicioController.actualizarServicio);
+router.delete("/:id", servicioController.eliminarServicio);
+router.patch("/:id/activar", servicioController.activarServicio);
 
 export default router;

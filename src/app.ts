@@ -35,8 +35,8 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use('/api/v1/usuarios', usuarioRouter);
-app.use('/api/v1/auth', authRouter);
+app.use('/api/usuarios', usuarioRouter);
+app.use('/api/auth', authRouter);
 app.use("/api/ubicaciones", ubicacionRoutes);
 app.use("/api/categorias", categoriaRoutes);
 app.use("/api/negocios", negocioRoutes);
