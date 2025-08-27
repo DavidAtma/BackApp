@@ -2,6 +2,18 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 
 import { Usuario } from '../entities/usuario';
+import { Ubicacion } from '../entities/ubicacion';
+import { Categoria } from '../entities/categoria';
+import { Negocio } from '../entities/negocio';
+import { NegocioImagen } from '../entities/negocioImagen';
+import { Servicio } from '../entities/servicio';
+import { Horario } from '../entities/horario';
+import { Resena } from '../entities/resena';
+import { ImagenResena } from '../entities/imagenResena';
+import { Mensaje } from '../entities/mensaje';
+import { DocumentoVerificacion } from '../entities/documentoVerificacion';
+import { Administrador } from '../entities/administrador';
+import { Cita } from '../entities/cita';
 
 export const AppDataSource = new DataSource({
 type: 'mssql',
@@ -13,7 +25,20 @@ type: 'mssql',
  synchronize: false,
   logging: false,
   entities: [
-    Usuario],
+    Usuario,
+  Ubicacion,
+Categoria,
+Negocio,
+NegocioImagen,
+Servicio,
+Horario,
+Resena,
+ImagenResena,
+Mensaje,
+DocumentoVerificacion,
+Administrador,
+Cita
+],
   extra: {
     options: {
       encrypt: false,

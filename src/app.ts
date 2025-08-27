@@ -1,6 +1,18 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 
+import ubicacionRoutes from "./routes/ubicacion.route";
+import categoriaRoutes from "./routes/categoria.route";
+import negocioRoutes from "./routes/negocio.route";
+import negocioImagenRoutes from "./routes/negocioImagen.route";
+import servicioRoutes from "./routes/servicio.route";
+import horarioRoutes from "./routes/horario.route";
+import resenaRoutes from "./routes/resena.route";
+import imagenResenaRoutes from "./routes/imagenResena.route";
+import mensajeRoutes from "./routes/mensaje.route";
+import documentoVerificacionRoutes from "./routes/documentoVerificacion.route";
+import adminRoutes from "./routes/administrador.route";
+import citaRoutes from "./routes/cita.route";
 
 import usuarioRouter from './routes/usuario.route';
 import authRouter from './routes/auth.route';
@@ -25,6 +37,19 @@ app.use(express.json());
 
 app.use('/api/v1/usuarios', usuarioRouter);
 app.use('/api/v1/auth', authRouter);
+app.use("/api/ubicaciones", ubicacionRoutes);
+app.use("/api/categorias", categoriaRoutes);
+app.use("/api/negocios", negocioRoutes);
+app.use("/api/negocio-imagenes", negocioImagenRoutes);
+app.use("/api/servicios", servicioRoutes);
+app.use("/api/horarios", horarioRoutes);
+app.use("/api/resenas", resenaRoutes);
+app.use("/api/imagenes-resenas", imagenResenaRoutes);
+app.use("/api/mensajes", mensajeRoutes);
+app.use("/api/documentos-verificacion", documentoVerificacionRoutes);
+app.use("/api/administradores", adminRoutes);
+app.use("/api/citas", citaRoutes);
+
 app.use((req: Request, res: Response) => {
   res.status(404).json({
     success: false,

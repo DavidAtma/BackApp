@@ -1,15 +1,13 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('Ubicaciones')
+@Entity("Ubicaciones")
 export class Ubicacion {
-  @PrimaryGeneratedColumn({ name: 'id_ubicacion' })
+  @PrimaryGeneratedColumn({ name: "id_ubicacion" })
   idUbicacion: number;
 
-  @Column({ name: 'ciudad', type: 'varchar', length: 100 })
+  @Column({ name: "ciudad", type: "varchar", length: 100 })
   ciudad: string;
 
-  @Column({ name: 'distrito', type: 'varchar', length: 250 })
+  @Column({ name: "distrito", type: "varchar", length: 100 })
   distrito: string;
-
- 
 }
