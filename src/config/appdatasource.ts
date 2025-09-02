@@ -16,36 +16,30 @@ import { Administrador } from '../entities/administrador';
 import { Cita } from '../entities/cita';
 
 export const AppDataSource = new DataSource({
-type: 'mssql',
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT as any, 10) || 1433,
-  username: process.env.DB_USERNAME || 'sa',
-  password: process.env.DB_PASSWORD || '123',
-  database: process.env.DB_NAME || 'AppMovil',
- synchronize: false,
+ type: "mysql",
+ driver: require("mysql2"),
+  host: process.env.DB_HOST || "mainline.proxy.rlwy.net",
+  port: Number(process.env.DB_PORT) || 21308,
+  username: process.env.DB_USERNAME || "root",
+  password: process.env.DB_PASSWORD || "yxQGOYNgTZAccFKObMfzhPxZTaotAxLv",
+  database: process.env.DB_NAME || "railway",
+  synchronize: true,
   logging: false,
   entities: [
     Usuario,
-  Ubicacion,
-Categoria,
-Negocio,
-NegocioImagen,
-Servicio,
-Horario,
-Resena,
-ImagenResena,
-Mensaje,
-DocumentoVerificacion,
-Administrador,
-Cita
-],
-  extra: {
-    options: {
-      encrypt: false,
-      enableArithAbort: true,
-      trustServerCertificate: true,
-    },
-  },
+    Ubicacion,
+    Categoria,
+    Negocio,
+    NegocioImagen,
+    Servicio,
+    Horario,
+    Resena,
+    ImagenResena,
+    Mensaje,
+    DocumentoVerificacion,
+    Administrador,
+    Cita
+  ],
 });
 
 export default AppDataSource;
