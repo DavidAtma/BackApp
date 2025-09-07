@@ -18,10 +18,10 @@ import { Cita } from '../entities/cita';
 export const AppDataSource = new DataSource({
  type: "mysql",
  driver: require("mysql2"),
-  host: process.env.DB_HOST || "mainline.proxy.rlwy.net",
-  port: Number(process.env.DB_PORT) || 21308,
+  host: process.env.DB_HOST || "nozomi.proxy.rlwy.net",
+  port: Number(process.env.DB_PORT) || 49636,
   username: process.env.DB_USERNAME || "root",
-  password: process.env.DB_PASSWORD || "yxQGOYNgTZAccFKObMfzhPxZTaotAxLv",
+  password: process.env.DB_PASSWORD || "xvXRfSBbtbTHlVppwiTVEAIetsmgpveZ",
   database: process.env.DB_NAME || "railway",
   synchronize: true,
   logging: false,
