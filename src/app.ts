@@ -1,5 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import filtroRoutes from "./routes/filtro.route";
 
 import ubicacionRoutes from "./routes/ubicacion.route";
 import categoriaRoutes from "./routes/categoria.route";
@@ -42,6 +43,7 @@ app.use("/api/categorias", categoriaRoutes);
 app.use("/api/negocios", negocioRoutes);
 app.use("/api/negocio-imagenes", negocioImagenRoutes);
 app.use("/api/servicios", servicioRoutes);
+app.use("/api/filtrar-servicios", filtroRoutes);
 app.use("/api/horarios", horarioRoutes);
 app.use("/api/resenas", resenaRoutes);
 app.use("/api/imagenes-resenas", imagenResenaRoutes);
