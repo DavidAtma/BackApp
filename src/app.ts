@@ -1,3 +1,5 @@
+import 'dotenv/config'; 
+
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import filtroRoutes from "./routes/filtro.route";
