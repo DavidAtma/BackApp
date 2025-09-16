@@ -12,7 +12,7 @@ export const insertarServicio = async (req: Request, res: Response) => {
 
 export const listarServicios = async (_req: Request, res: Response) => {
   try {
-    const servicios = await servicioService.listarServicios();
+    const servicios = await servicioService.listarServiciosConNegocio();
     res.json({ success: true, data: servicios });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });
@@ -22,6 +22,16 @@ export const listarServicios = async (_req: Request, res: Response) => {
 export const listarServiciosActivos = async (_req: Request, res: Response) => {
   try {
     const servicios = await servicioService.listarServiciosActivos();
+    res.json({ success: true, data: servicios });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// NUEVO: Endpoint para servicios con descuento (ofertas)
+export const listarServiciosConDescuento = async (_req: Request, res: Response) => {
+  try {
+    const servicios = await servicioService.listarServiciosConDescuento();
     res.json({ success: true, data: servicios });
   } catch (error: any) {
     res.status(500).json({ success: false, message: error.message });

@@ -8,6 +8,9 @@ import {
 } from "typeorm";
 import { Categoria } from "./categoria";
 import { Ubicacion } from "./ubicacion";
+import { OneToMany } from "typeorm";
+import { Servicio } from "./servicio";
+
 
 @Entity("Negocios")
 export class Negocio {
@@ -49,4 +52,7 @@ export class Negocio {
 
   @Column({ name: "estado_auditoria", type: "bit", default: true })
   estado: boolean;
+
+  @OneToMany(() => Servicio, (servicio) => servicio.negocio)
+servicios!: Servicio[];
 }

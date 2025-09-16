@@ -45,3 +45,32 @@ export const eliminarServicio = async (id: number) => {
 export const activarServicio = async (id: number) => {
   await servicioRepository.update({ idServicio: id }, { estadoAuditoria: true });
 };
+
+//CAMBIOS SUSAN
+export const listarServiciosConNegocio = async () => {
+  return await servicioRepository.find({
+    relations: ["negocio"], // 👈 JOIN automático con negocio
+  });
+};
+
+// NUEVO: Servicios con descuento para la sección de ofertas
+// export const listarServiciosConDescuento = async () => {
+//   return await servicioRepository.find({
+//     where: { 
+//       estadoAuditoria: true,
+//       descuento: () => "descuento IS NOT NULL AND descuento > 0" // 👈 Filtra solo con descuento
+//     },
+//     relations: ["negocio"],
+//     order: { descuento: "DESC" } // 👈 Ordena por mayor descuento primero
+//   });
+// };
+export const listarServiciosConDescuento = async () => {
+  return await servicioRepository
+    .createQueryBuilder("servicio")
+    .leftJoinAndSelect("servicio.negocio", "negocio")
+    .where("servicio.estado_auditoria = :estado", { estado: true })
+    .andWhere("servicio.descuento IS NOT NULL")
+    .andWhere("servicio.descuento > 0")
+    .orderBy("servicio.descuento", "DESC")
+    .getMany();
+};
