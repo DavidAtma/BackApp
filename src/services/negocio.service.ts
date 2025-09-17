@@ -70,13 +70,28 @@ export const listar = async (opts: {
   return { items, total, page, pageSize };
 };
 
+// export const obtenerPorId = async (idNegocio: number): Promise<Negocio | null> => {
+//   await ensureDS();
+//   return await AppDataSource.getRepository(Negocio).findOne({
+//     where: { idNegocio },
+//     relations: ["categoria", "ubicacion"],
+//   });
+// };
 export const obtenerPorId = async (idNegocio: number): Promise<Negocio | null> => {
   await ensureDS();
   return await AppDataSource.getRepository(Negocio).findOne({
     where: { idNegocio },
-    relations: ["categoria", "ubicacion"],
+    relations: [
+      "categoria",
+      "ubicacion",
+      "servicios",
+      "imagenes",
+      "horarios"
+    ],
   });
 };
+
+
 
 export const actualizar = async (idNegocio: number, data: Partial<Negocio>): Promise<void> => {
   await ensureDS();

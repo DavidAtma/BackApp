@@ -11,6 +11,7 @@ import { Ubicacion } from "./ubicacion";
 import { OneToMany } from "typeorm";
 import { Servicio } from "./servicio";
 import { NegocioImagen } from "./negocioImagen";
+import { Horario } from "./horario";
 
 @Entity("Negocios")
 export class Negocio {
@@ -51,7 +52,7 @@ export class Negocio {
   @CreateDateColumn({ name: "fecha_creacion", type: "datetime" })
   fechaCreacion: Date;
 
-  @Column({ name: "estado_auditoria", type: "bit", default: true })
+  @Column({ name: "estado_auditoria", type: "tinyint", default: true })
   estado: boolean;
 
   @OneToMany(() => Servicio, (servicio) => servicio.negocio)
@@ -59,4 +60,7 @@ servicios!: Servicio[];
 
   @OneToMany(() => NegocioImagen, (imagen) => imagen.negocio)
     imagenes!: NegocioImagen[];
+  
+  @OneToMany(() => Horario, (horario) => horario.negocio)
+    horarios!: Horario[];
 }

@@ -26,6 +26,6 @@ export class NegocioImagen {
   @CreateDateColumn({ name: "fecha_subida", type: "datetime" })
   fechaSubida: Date;
 
-  @Column({ name: "estado", type: "bit", default: true })
+  @Column({ name: "estado", type: "tinyint", default: true })
   estado: boolean;
 }

@@ -25,6 +25,6 @@ export class Horario {
   @Column({ name: "hora_cierre", type: "time" })
   horaCierre: string;
 
-  @Column({ name: "estado_auditoria", type: "bit", default: true })
+  @Column({ name: "estado_auditoria", type: "tinyint", default: true })
   estado: boolean;
 }
