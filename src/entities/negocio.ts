@@ -10,7 +10,7 @@ import { Categoria } from "./categoria";
 import { Ubicacion } from "./ubicacion";
 import { OneToMany } from "typeorm";
 import { Servicio } from "./servicio";
-
+import { NegocioImagen } from "./negocioImagen";
 
 @Entity("Negocios")
 export class Negocio {
@@ -20,7 +20,8 @@ export class Negocio {
   // FKs
   @ManyToOne(() => Categoria, { nullable: false })
   @JoinColumn({ name: "id_categoria" })
-  categoria: Categoria;
+  // categoria: Categoria;
+  categoria!: Categoria;
 
   @ManyToOne(() => Ubicacion, { nullable: false })
   @JoinColumn({ name: "id_ubicacion" })
@@ -55,4 +56,7 @@ export class Negocio {
 
   @OneToMany(() => Servicio, (servicio) => servicio.negocio)
 servicios!: Servicio[];
+
+  @OneToMany(() => NegocioImagen, (imagen) => imagen.negocio)
+    imagenes!: NegocioImagen[];
 }

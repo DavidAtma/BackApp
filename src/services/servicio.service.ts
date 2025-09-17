@@ -47,9 +47,37 @@ export const activarServicio = async (id: number) => {
 };
 
 //CAMBIOS SUSAN
+// export const listarServiciosConNegocio = async () => {
+//   return await servicioRepository.find({
+//     relations: ["negocio"], // 👈 JOIN automático con negocio
+//   });
+// };
+
+// En servicio.service.ts
 export const listarServiciosConNegocio = async () => {
   return await servicioRepository.find({
-    relations: ["negocio"], // 👈 JOIN automático con negocio
+    relations: [
+      "negocio", 
+      "negocio.categoria",    // ← Añadir categoría del negocio
+      "negocio.imagenes"      // ← Añadir imágenes del negocio
+    ],
+    where: { 
+      estadoAuditoria: true,
+      // Opcional: filtrar solo imágenes activas del negocio
+      negocio: {
+        imagenes: {
+          estado: true
+        }
+      }
+    },
+    order: {
+      // Opcional: ordenar por alguna criteria
+      negocio: {
+        imagenes: {
+          fechaSubida: "DESC" // ← Para obtener la imagen más reciente primero
+        }
+      }
+    }
   });
 };
 

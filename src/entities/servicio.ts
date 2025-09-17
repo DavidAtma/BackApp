@@ -10,9 +10,6 @@ export class Servicio {
   @Column({ name: "nombre", type: "varchar", length: 250 })
   nombre!: string;
 
-  // @Column({ name: "descripcion", type: "varchar", length: 1000, nullable: true })
-  // descripcion!: string;
-
   // NUEVO: campo descuento
   @Column({ name: "descuento", type: "decimal", precision: 5, scale: 2, nullable: true })
   descuento!: number;
