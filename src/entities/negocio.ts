@@ -8,7 +8,9 @@ import {
 } from "typeorm";
 import { Categoria } from "./categoria";
 import { Ubicacion } from "./ubicacion";
-import { OneToMany } from "typeorm";
+//import { OneToMany } from "typeorm";
+import { OneToMany, RelationId } from "typeorm";
+import { Usuario } from "./usuario";
 import { Servicio } from "./servicio";
 import { NegocioImagen } from "./negocioImagen";
 import { Horario } from "./horario";
@@ -63,4 +65,20 @@ servicios!: Servicio[];
   
   @OneToMany(() => Horario, (horario) => horario.negocio)
     horarios!: Horario[];
+
+      // =========================
+  // Dueño del negocio (1:N)
+  // =========================
+  @ManyToOne(() => Usuario, {
+    nullable: true,
+    onDelete: "SET NULL",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn({ name: "id_usuario" }) // usa la FK física existente en BD
+  usuario!: Usuario | null;
+
+  // Acceso directo al id del dueño sin cargar el objeto Usuario
+  @RelationId((n: Negocio) => n.usuario)
+  idUsuario!: number | null;
+
 }
