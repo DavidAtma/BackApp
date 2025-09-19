@@ -10,4 +10,6 @@ export class Ubicacion {
 
   @Column({ name: "distrito", type: "varchar", length: 100 })
   distrito: string;
+
+  
 }

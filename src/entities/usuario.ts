@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from "typeorm";
+import { Negocio } from "./negocio";
 
 @Entity("Usuarios")
 export class Usuario {
@@ -32,4 +33,10 @@ export class Usuario {
 
     @Column({ name: "estado_auditoria", type: "bit", default: () => "1" })
     estadoAuditoria!: boolean;
+
+
+
+      @OneToMany(() => Negocio, (n) => n.usuario, { cascade: false })
+  negocios!: Negocio[];
+
 }
