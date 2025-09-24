@@ -18,7 +18,7 @@ import { Horario } from "./horario";
 @Entity("Negocios")
 export class Negocio {
   @PrimaryGeneratedColumn({ name: "id_negocio" })
-  idNegocio: number;
+  idNegocio!: number;
 
   // FKs
   @ManyToOne(() => Categoria, { nullable: false })
@@ -54,8 +54,8 @@ export class Negocio {
   @CreateDateColumn({ name: "fecha_creacion", type: "datetime" })
   fechaCreacion: Date;
 
-  @Column({ name: "estado_auditoria", type: "tinyint", default: true })
-  estado: boolean;
+  @Column({ name: "estado_auditoria", type: "tinyint", default: 0 })
+  estadoAuditoria: number;
 
   @OneToMany(() => Servicio, (servicio) => servicio.negocio)
 servicios!: Servicio[];
@@ -75,7 +75,7 @@ servicios!: Servicio[];
     onUpdate: "CASCADE",
   })
   @JoinColumn({ name: "id_usuario" }) // usa la FK física existente en BD
-  usuario!: Usuario | null;
+  usuario!: Usuario;
 
   // Acceso directo al id del dueño sin cargar el objeto Usuario
   @RelationId((n: Negocio) => n.usuario)

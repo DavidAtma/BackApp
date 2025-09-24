@@ -16,7 +16,7 @@ export const login = async (
   }
   const repo = AppDataSource.getRepository(Usuario);
   const usuario = await repo.findOne({
-    where: { correo: correo.trim().toLowerCase(), estadoAuditoria: true },
+    where: { correo: correo.trim().toLowerCase(), estadoAuditoria: 1 },
   });
   if (!usuario) return null;
   return usuario.contrasena === contrasena ? usuario : null;
@@ -63,7 +63,7 @@ export async function findOrCreateGoogleUser(
   if (user) {
     // Actualizar fotoPerfil y estadoAuditoria si hace falta
     if (!user.fotoPerfil && p.fotoPerfil) user.fotoPerfil = p.fotoPerfil;
-    if (!user.estadoAuditoria) user.estadoAuditoria = true;
+    if (!user.estadoAuditoria) user.estadoAuditoria = 1;
     await repo.save(user);
     return user;
   }
@@ -77,7 +77,7 @@ export async function findOrCreateGoogleUser(
     contrasena: placeholderPwd,
     fechaNacimiento: null as any,       // asume nullable
     fotoPerfil: p.fotoPerfil ?? null,
-    estadoAuditoria: true,
+    estadoAuditoria: 1,
   } as Partial<Usuario>);
 
   return await repo.save(user);

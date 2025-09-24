@@ -31,8 +31,8 @@ export class Usuario {
     @CreateDateColumn({ name: "fecha_creacion", type: "datetime" })
     fechaCreacion!: Date;
 
-    @Column({ name: "estado_auditoria", type: "bit", default: () => "1" })
-    estadoAuditoria!: boolean;
+    @Column({ name: "estado_auditoria", type: "tinyint", default: () => "1" })
+    estadoAuditoria!: number;
 
 
 

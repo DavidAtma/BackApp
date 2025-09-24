@@ -15,7 +15,7 @@ export const listarUsuarios = async () => {
 
 // Listar activos
 export const listarUsuariosActivos = async () => {
-  return await usuarioRepository.find({ where: { estadoAuditoria: true } });
+  return await usuarioRepository.find({ where: { estadoAuditoria: 1 } });
 };
 
 // Buscar por ID
@@ -30,10 +30,10 @@ export const actualizarUsuario = async (id: number, data: Partial<Usuario>) => {
 
 // Eliminar lógico (soft delete)
 export const eliminarUsuario = async (id: number) => {
-  await usuarioRepository.update({ idUsuario: id }, { estadoAuditoria: false });
+  await usuarioRepository.update({ idUsuario: id }, { estadoAuditoria: 0 });
 };
 
 // Activar usuario
 export const activarUsuario = async (id: number) => {
-  await usuarioRepository.update({ idUsuario: id }, { estadoAuditoria: true });
+  await usuarioRepository.update({ idUsuario: id }, { estadoAuditoria: 1 });
 };

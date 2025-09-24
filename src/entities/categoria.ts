@@ -14,6 +14,6 @@ export class Categoria {
   @CreateDateColumn({ name: "fecha_creacion", type: "datetime" })
   fechaCreacion: Date;
 
-  @Column({ name: "estado", type: "bit", default: true })
+  @Column({ name: "estado", type: "tinyint", default: true })
   estado: boolean;
 }
