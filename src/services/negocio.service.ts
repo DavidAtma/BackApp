@@ -197,6 +197,10 @@ export const listar = async (opts: {
   idCategoria?: number;
   idUbicacion?: number;
   soloActivos?: boolean;
+  // 🔎 NUEVO
+  q?: string;
+  distrito?: string;
+  ciudad?: string;
 }) => {
   await ensureDS();
   const repo = AppDataSource.getRepository(Negocio);
@@ -215,6 +219,39 @@ export const listar = async (opts: {
   if (opts.idCategoria) qb.andWhere("c.idCategoria = :idCategoria", { idCategoria: opts.idCategoria });
   if (opts.idUbicacion) qb.andWhere("u.idUbicacion = :idUbicacion", { idUbicacion: opts.idUbicacion });
   if (opts.soloActivos) qb.andWhere("n.estadoAuditoria = 1");
+
+  // 🔎 Filtros por distrito/ciudad directos
+  if (opts.distrito) {
+    qb.andWhere("LOWER(u.distrito) LIKE LOWER(:distrito)", { distrito: `%${opts.distrito.trim()}%` });
+  }
+  if (opts.ciudad) {
+    qb.andWhere("LOWER(u.ciudad) LIKE LOWER(:ciudad)", { ciudad: `%${opts.ciudad.trim()}%` });
+  }
+
+  // 🔎 Búsqueda general por texto en:
+  // - n.nombre, n.direccion
+  // - u.distrito, u.ciudad
+  // - nombre de servicios asociados (EXISTS evita duplicados)
+  if (opts.q && opts.q.trim() !== "") {
+    const q = `%${opts.q.trim().toLowerCase()}%`;
+    qb.andWhere(
+      `
+      (
+        LOWER(n.nombre)            LIKE :q OR
+        LOWER(COALESCE(n.direccion, '')) LIKE :q OR
+        LOWER(COALESCE(u.distrito,  '')) LIKE :q OR
+        LOWER(COALESCE(u.ciudad,   '')) LIKE :q OR
+        EXISTS (
+          SELECT 1
+          FROM Servicios s
+          WHERE s.id_negocio = n.id_negocio
+            AND LOWER(s.nombre) LIKE :q
+        )
+      )
+      `,
+      { q }
+    );
+  }
 
   const [items, total] = await qb.getManyAndCount();
   return { items, total, page, pageSize };

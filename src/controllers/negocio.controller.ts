@@ -64,13 +64,25 @@ export const crear = async (req: Request, res: Response) => {
 
 export const listar = async (req: Request, res: Response) => {
   try {
-    const page = parseInt(String(req.query.page ?? "1"));
-    const pageSize = parseInt(String(req.query.pageSize ?? "20"));
-    const soloActivos = req.query.activos === "true";
-    const idCategoria = req.query.idCategoria ? parseInt(String(req.query.idCategoria)) : undefined;
-    const idUbicacion = req.query.idUbicacion ? parseInt(String(req.query.idUbicacion)) : undefined;
+    // Soportar tanto pageSize como limit
+    const page       = parseInt(String(req.query.page ?? "1"));
+    const pageSize   = parseInt(String(req.query.pageSize ?? req.query.limit ?? "20"));
 
-    const data = await negocioService.listar({ page, pageSize, soloActivos, idCategoria, idUbicacion });
+    const soloActivos  = req.query.activos === "true";
+    const idCategoria  = req.query.idCategoria ? parseInt(String(req.query.idCategoria)) : undefined;
+    const idUbicacion  = req.query.idUbicacion ? parseInt(String(req.query.idUbicacion)) : undefined;
+
+    // 🔎 NUEVO: parámetros de búsqueda
+    const q        = (req.query.q as string) || (req.query.search as string) || undefined; // alias
+    const distrito = req.query.distrito ? String(req.query.distrito) : undefined;
+    const ciudad   = req.query.ciudad   ? String(req.query.ciudad)   : undefined;
+
+    const data = await negocioService.listar({
+      page, pageSize,
+      soloActivos, idCategoria, idUbicacion,
+      q, distrito, ciudad
+    });
+
     res.json(BaseResponse.success(data, "Consulta exitosa"));
   } catch (err: any) {
     res.status(500).json(BaseResponse.error(err.message));
