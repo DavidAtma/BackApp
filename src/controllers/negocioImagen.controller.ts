@@ -1,6 +1,48 @@
 import { Request, Response } from "express";
+import { supabase } from "../config/supabase";
 import * as service from "../services/negocioImagen.service";
 import { BaseResponse } from "../shared/base-response";
+
+export const subirImagen = async (req: Request, res: Response) => {
+  try {
+    // const file = req.file; // viene de multer
+    const file = (req as any).file;
+
+    const { idNegocio, descripcion } = req.body;
+
+    if (!file) {
+      return res.status(400).json(BaseResponse.error("No se recibió ningún archivo"));
+    }
+
+    // Nombre único para la imagen
+    const fileName = `negocios/${idNegocio}/${Date.now()}_${file.originalname}`;
+
+    // Subir a Supabase Storage
+    const { error } = await supabase.storage
+      .from("negocios") // nombre de tu bucket
+      .upload(fileName, file.buffer, {
+        contentType: file.mimetype,
+      });
+
+    if (error) throw error;
+
+    // Obtener URL pública
+    const { data: publicUrl } = supabase.storage
+      .from("negocios")
+      .getPublicUrl(fileName);
+
+    // Guardar en tu BD
+    const creada = await service.insertar({
+      idNegocio: Number(idNegocio),
+      urlImagen: publicUrl.publicUrl,
+      descripcion,
+    });
+
+    res.status(201).json(BaseResponse.success(creada, "Imagen subida y registrada"));
+  } catch (err: any) {
+    res.status(500).json(BaseResponse.error(err.message));
+  }
+};
 
 export const insertar = async (req: Request, res: Response) => {
   try {
