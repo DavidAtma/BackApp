@@ -3,6 +3,7 @@ import { Servicio } from "../entities/servicio";
 
 const servicioRepository = AppDataSource.getRepository(Servicio);
 
+
 // Crear servicio
 export const insertarServicio = async (servicio: Partial<Servicio>) => {
   return await servicioRepository.save(servicio);
