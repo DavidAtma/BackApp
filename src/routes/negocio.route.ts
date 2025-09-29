@@ -31,3 +31,4 @@ router.post("/:id/activar", verificarJWT, negocioController.activar);
 router.delete("/:id", verificarJWT, negocioController.desactivar);
 
 export default router;
+//probando
