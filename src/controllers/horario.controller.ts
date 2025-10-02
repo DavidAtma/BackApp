@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as service from "../services/horario.service";
 import { BaseResponse } from "../shared/base-response";
+import * as horarioService from "../services/horario.service";
 
 export const crear = async (req: Request, res: Response) => {
   try {
@@ -38,7 +39,9 @@ export const obtenerPorId = async (req: Request, res: Response) => {
 export const actualizar = async (req: Request, res: Response) => {
   try {
     const id = parseInt(req.params.id);
-    await service.actualizar(id, req.body);
+
+    await service.actualizar(id, req.body);  // 👈 delega al service
+
     res.json(BaseResponse.success(null, "Horario actualizado"));
   } catch (err: any) {
     res.status(500).json(BaseResponse.error(err.message));
@@ -64,3 +67,14 @@ export const activar = async (req: Request, res: Response) => {
     res.status(500).json(BaseResponse.error(err.message));
   }
 };
+
+export const listarPorNegocio = async (req: Request, res: Response) => {
+  try {
+    const idNegocio = parseInt(req.params.idNegocio);
+    const data = await horarioService.listarPorNegocio(idNegocio);
+    res.json({ success: true, message: "Consulta exitosa", data });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: err.message, data: null });
+  }
+};
+
