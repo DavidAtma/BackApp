@@ -33,7 +33,7 @@ export const listar = async (idNegocio?: number): Promise<Horario[]> => {
   const repo = AppDataSource.getRepository(Horario);
 
   return await repo.find({
-    where: idNegocio ? { negocio: { idNegocio }, estado: true } : { estado: true },
+    where: idNegocio ? { negocio: { idNegocio } } : {},
     relations: ["negocio"],
     order: { idHorario: "ASC" },
   });
@@ -49,7 +49,7 @@ export const obtenerPorId = async (idHorario: number): Promise<Horario | null> =
 
 export const actualizar = async (
   idHorario: number,
-  data: Partial<Horario> & { idNegocio?: number }
+  data: Partial<Horario> & { idNegocio?: number; hora_apertura?: string; hora_cierre?: string }
 ): Promise<void> => {
   await ensureDS();
   const repo = AppDataSource.getRepository(Horario);
@@ -62,7 +62,18 @@ export const actualizar = async (
     delete (data as any).idNegocio;
   }
 
+  // 👇 Normalizamos snake_case a camelCase
+  if ((data as any).hora_apertura) {
+    (data as any).horaApertura = (data as any).hora_apertura;
+    delete (data as any).hora_apertura;
+  }
+  if ((data as any).hora_cierre) {
+    (data as any).horaCierre = (data as any).hora_cierre;
+    delete (data as any).hora_cierre;
+  }
+
   delete (data as any).idHorario;
+
   await repo.update({ idHorario }, data);
 };
 
@@ -74,4 +85,14 @@ export const desactivar = async (idHorario: number): Promise<void> => {
 export const activar = async (idHorario: number): Promise<void> => {
   await ensureDS();
   await AppDataSource.getRepository(Horario).update({ idHorario }, { estado: true });
+};
+
+const horarioRepo = AppDataSource.getRepository(Horario);
+
+export const listarPorNegocio = async (idNegocio: number) => {
+  // Busca todos los horarios de un negocio
+  return await horarioRepo.find({
+    where: { negocio: { idNegocio } },
+    order: { idHorario: "ASC" }, // opcional: ordenarlos
+  });
 };
