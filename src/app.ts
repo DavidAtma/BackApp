@@ -16,6 +16,7 @@ import mensajeRoutes from "./routes/mensaje.route";
 import documentoVerificacionRoutes from "./routes/documentoVerificacion.route";
 import adminRoutes from "./routes/administrador.route";
 import citaRoutes from "./routes/cita.route";
+import recuperacionRoutes from "./routes/recuperacion.routes";
 
 import usuarioRouter from './routes/usuario.route';
 import authRouter from './routes/auth.route';
@@ -53,6 +54,9 @@ app.use("/api/mensajes", mensajeRoutes);
 app.use("/api/documentos-verificacion", documentoVerificacionRoutes);
 app.use("/api/administradores", adminRoutes);
 app.use("/api/citas", citaRoutes);
+app.use("/api/auth/recuperacion", recuperacionRoutes);
+
+
 
 app.use((req: Request, res: Response) => {
   res.status(404).json({

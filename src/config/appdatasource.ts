@@ -14,10 +14,11 @@ import { Mensaje } from '../entities/mensaje';
 import { DocumentoVerificacion } from '../entities/documentoVerificacion';
 import { Administrador } from '../entities/administrador';
 import { Cita } from '../entities/cita';
+import { CodigoVerificacion } from "../entities/codigoVerificacion"; // 👈 AGREGAR ESTA LÍNEA
 
 export const AppDataSource = new DataSource({
- type: "mysql",
- driver: require("mysql2"),
+  type: "mysql",
+  driver: require("mysql2"),
   host: process.env.DB_HOST || "nozomi.proxy.rlwy.net",
   port: Number(process.env.DB_PORT) || 49636,
   username: process.env.DB_USERNAME || "root",
@@ -38,7 +39,8 @@ export const AppDataSource = new DataSource({
     Mensaje,
     DocumentoVerificacion,
     Administrador,
-    Cita
+    Cita,
+    CodigoVerificacion
   ],
 });
 

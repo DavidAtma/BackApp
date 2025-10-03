@@ -33,7 +33,7 @@ export class Usuario {
     @CreateDateColumn({ name: "fecha_creacion", type: "datetime" })
     fechaCreacion!: Date;
 
-    @Column({ name: "estado_auditoria", type: "tinyint", default: () => "1" })
+    @Column({ name: "estado_auditoria", type: "tinyint", default: () => "0" })
     estadoAuditoria!: number;
 
     @OneToOne(() => Negocio, (n) => n.usuario) // 👈 uno a uno
