@@ -14,7 +14,9 @@ router.get("/:id", (req, _res, next) => {
 }, negocioController.obtenerPorId);
 
 // 🔐 Rutas privadas (sí requieren token)
-router.post("/", negocioController.crear);
+router.post("/", verificarJWT, negocioController.crear); // ← CAMBIO CLAVE
+
+// router.post("/", negocioController.crear);
 router.put("/:id", negocioController.actualizar);
 router.post("/:id/activar", verificarJWT, negocioController.activar);
 router.delete("/:id", verificarJWT, negocioController.desactivar);
